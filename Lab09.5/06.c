@@ -35,10 +35,15 @@ void insert(int number, Num** list) {
 void delete(int number, Num** list) {
     Num* current_node = *list;
     Num* prev_node = NULL;
-    while (current_node != NULL && current_node->num == number) {
+    if (current_node == NULL)
+        return;
+    while (current_node != NULL && current_node->num != number) {
         prev_node = current_node;
         current_node = current_node->next;
     }
+    if (current_node->next == NULL)
+        return;
+    
 }
 
 void print(Num* list) {

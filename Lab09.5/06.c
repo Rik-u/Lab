@@ -32,18 +32,26 @@ void insert(int number, Num** list) {
     }
 }
 
-void delete(int number, Num** list) {
+void delete_node(int number, Num** list) {
     Num* current_node = *list;
     Num* prev_node = NULL;
-    if (current_node == NULL)
-        return;
-    while (current_node != NULL && current_node->num != number) {
-        prev_node = current_node;
-        current_node = current_node->next;
+    while (current_node != NULL) {
+        if (current_node->num == number) {
+            if (prev_node == NULL) {
+                *list = current_node->next;
+            }
+            else {
+                prev_node->next = current_node->next;
+            }
+            Num* next_node = current_node->next;
+            delete_node(number, list);
+            current_node = next_node;
+        }
+        else {
+            prev_node = current_node;
+            current_node = current_node->next;
+        }
     }
-    if (current_node->next == NULL)
-        return;
-    
 }
 
 void print(Num* list) {
@@ -74,7 +82,7 @@ int main() {
                 insert(num, &linked_list);
                 break;
             case 'd':
-                delete(num, &linked_list);
+                delete_node(num, &linked_list);
                 break;
             case 'q':
                 exit(0);
